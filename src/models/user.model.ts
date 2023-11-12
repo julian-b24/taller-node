@@ -4,9 +4,6 @@ export interface UserInput {
     name: string;
     email: string;
     password: string;
-    idNumber: string;
-    phoyoURL: string;
-    active: boolean;
     role: string;
 }
 

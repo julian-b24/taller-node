@@ -21,7 +21,7 @@ class GroupController {
         }
     }
 
-    public async  findById(req: Request, res: Response) {
+    public async findById(req: Request, res: Response) {
         try{
             
             return res.status(200).json();
@@ -30,8 +30,51 @@ class GroupController {
         }
     }
 
+    public async update(req: Request, res: Response) {
+        try{
+            
+            return res.status(200).json();
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    }
 
+    public async delete(req: Request, res: Response) {
+        try{
+            
+            return res.status(200).json();
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    }
 
+    public async addUserToGroup(req: Request, res: Response) {
+        try{
+            
+            return res.status(200).json();
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    }
+
+    public async deleteUserFromGroup(req: Request, res: Response) {
+        try{
+            
+            return res.status(200).json();
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    }
+
+    public async findUsersInGroup(req: Request, res: Response) {
+        try{
+            
+            return res.status(200).json();
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    }
+    
     
 }
 

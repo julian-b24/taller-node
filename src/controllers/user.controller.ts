@@ -59,6 +59,15 @@ class UserController {
         }
     }
 
+    public async delete(req: Request, res: Response) {
+        try {
+            return res.status(200).json()
+            
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    }
+
     public async login(req: Request, res: Response) {
         try {
             const user: UserDocument | null = await userService.findByEmail(req.body.email);
@@ -80,6 +89,14 @@ class UserController {
         }
     }
 
+    public async findUserGroups(req: Request, res: Response) {
+        try {
+            return res.status(200).json()
+            
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    }
 
     
 }

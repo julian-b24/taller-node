@@ -3,7 +3,6 @@ import  mongoose from "mongoose";
 export interface GroupInput {
     name: string;
     users: string[];
-    active: boolean;
 }
 
 export  interface GroupDocument extends GroupInput, mongoose.Document {
