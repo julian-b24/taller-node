@@ -20,6 +20,15 @@ class GroupService {
         }        
     }
 
+    public async findByName(groupName: string): Promise<GroupDocument | null> {
+        try {
+            const group = await GroupModel.findOne({"name" : groupName});
+            return group;
+        } catch (error) {
+            throw error 
+        }        
+    }
+
     public async findAll(): Promise<GroupDocument[]> {
         try {
             const groups = await GroupModel.find();
