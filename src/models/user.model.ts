@@ -3,14 +3,13 @@ import { GroupInput } from "./group.model";
 
 export interface UserBasic {
     name: string;
-    email: string;
-    password: string;
-    role: string;
-    groups: [GroupInput];
+    email: string; 
 }
 
 export interface UserInput extends UserBasic {
     password: string;
+    groups: [GroupInput];
+    role: "superadmin" | "user" | undefined;
 }
 
 export  interface UserDocument extends UserInput, mongoose.Document {
@@ -23,7 +22,7 @@ const userSchema = new mongoose.Schema({
         name: {type: String, required: true},
         email: {type: String, required: true, index: true, unique: true},
         password: {type: String, required: true},
-        role: {type: String, required: true},
+        role: {type: String, required: true, enum: ["superadmin", "user"]},
         groups: {type: Array, required: true}
     }, {timestamps: true, collection: "users"});
 

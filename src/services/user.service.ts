@@ -62,7 +62,7 @@ class UserService {
 
     public async generateToken(user: UserDocument): Promise<String> {
         try {
-            const token = jwt.sign({user_id: user.id, email: user.email}, process.env.JWT_SECRET || 'secret', {expiresIn: "5m"});
+            const token = jwt.sign({user_id: user.id, email: user.email, role: user.role}, process.env.JWT_SECRET || 'secret', {expiresIn: "5m"});
 
             return token;
         } catch (error) {

@@ -1,0 +1,31 @@
+[
+    {
+      "name": "User1",
+      "email": "user1@example.com",
+      "password": "$2a$10$hPvS7vV29/abgAHEI9LtBu83Q5cvR9DtTva9VDM7ud0Jp6PXCeTMa",
+      "role": "user",
+      "groups": []
+    },
+    {
+      "name": "User2",
+      "email": "user2@example.com",
+      "password": "$2a$10$r0KSLwOLsWWbSElf8sGLq.Nan4Wbo.hNiYYytqNJaaKNgo70MyzQq",
+      "role": "user",
+      "groups": []
+    },
+    {
+      "name": "User3",
+      "email": "user3@example.com",
+      "password": "$2a$10$5KU3ee27ANAvfd6bE1aznOYMpBuMzM5yM8kuhf2ZTPXiZRvFiSYFm",
+      "role": "user",
+      "groups": []
+    },
+    {
+      "name": "Admin",
+      "email": "user4@example.com",
+      "password": "$2a$10$MphuieYjbQ.gKcqVDF/8Be8MzaDlg.2uKVsv2BNhFd1vAdV/XsTXq",
+      "role": "superadmin",
+      "groups": []
+    }
+  ]
+  
