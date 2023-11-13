@@ -15,7 +15,7 @@ export  interface GroupDocument extends GroupInput, mongoose.Document {
 const groupSchema = new mongoose.Schema({
         name: {type: String, required: true, index: true},
         users: {type: Array, required: true}
-    }, {timestamps: true, collection: "groups"});
+    }, {timestamps: true, collection: "groups", versionKey: false});
 
 const Group = mongoose.model<GroupDocument>("Group", groupSchema);
 

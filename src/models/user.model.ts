@@ -12,7 +12,7 @@ export interface UserInput extends UserBasic {
     role: "superadmin" | "user" | undefined;
 }
 
-export  interface UserDocument extends UserInput, mongoose.Document {
+export interface UserDocument extends UserInput, mongoose.Document {
     createdAt: Date;
     updatedAt: Date;
     deleteAt?: Date;
@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
         password: {type: String, required: true},
         role: {type: String, required: true, enum: ["superadmin", "user"]},
         groups: {type: Array, required: true}
-    }, {timestamps: true, collection: "users"});
+    }, {timestamps: true, collection: "users", versionKey: false});
 
 const User = mongoose.model<UserDocument>("User", userSchema);
 
