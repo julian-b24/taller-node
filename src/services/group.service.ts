@@ -59,20 +59,28 @@ class GroupService {
     public async addUserToGroup(groupId: string, newUser: UserBasic): Promise<GroupDocument | null> {
         try {
             const group: GroupDocument | null = await GroupModel.findById(groupId);
-            const user: UserDocument | null = await UserModel.findOne({"email": newUser.email}); 
-            if(group && user
-                && !this.userIsInGroup(group, user)
-                && !this.userHasGroupAssociated(group, user)) {
-                
+            const user: UserDocument | null = await UserModel.findOne({"email": newUser.email});
+            console.log("In service: " );
+            console.log(group);
+            console.log(user);
+             
+            if(group && user) {
+                if(await this.userIsInGroup(group, user)){
+                    throw new Error("User is already in group");
+                }
+                if(await this.userHasGroupAssociated(group, user)) {
+                    throw new Error("User already has group associated");
+                }
+
                 group.users.push(newUser);
                 await group.save();
 
-                user.groups.push(group._id);
+                user.groups.push(group);
                 user.save();
 
                 return group;
             } else {
-                throw new Error;
+                throw new Error("User or group not found in DB");
             }
         }  catch (error) {
             throw error;
@@ -82,14 +90,18 @@ class GroupService {
     public async deleteUserFromGroup(groupId: string, userId: string): Promise<GroupDocument | null> {
         try {
             const group: GroupDocument | null = await GroupModel.findById(groupId);
-            const user: UserDocument | null = await UserModel.findById(userId); 
-            if(group && user 
-                && await this.userIsInGroup(group, user) 
-                && await this.userHasGroupAssociated(group, user)){
+            const user: UserDocument | null = await UserModel.findById(userId);
+            if(group && user) {
+                if(await !this.userIsInGroup(group, user)){
+                    throw new Error("User is not part of the group");
+                }
+                if(await !this.userHasGroupAssociated(group, user)) {
+                    throw new Error("User already doesn't have group associated");
+                }               
                 
                 const users = group.users.filter(u => u.email !== user.email) as [UserBasic];
                 group.users = users;
-                await group.save();
+                await group.save();            
 
                 const groups = user.groups.filter(g => g.name !== group.name) as [GroupInput];
                 user.groups = groups;
@@ -104,13 +116,13 @@ class GroupService {
         }        
     }
 
-    private async userIsInGroup(group: GroupDocument, user: UserDocument): Promise<boolean> {
-        const inGroup: boolean = group.users.filter(u => u.email === user.email) !== null;
+    private async userIsInGroup(group: GroupDocument, user: UserDocument): Promise<boolean> {        
+        const inGroup: boolean = group.users.filter(u => u.email === user.email).length === 1;
         return inGroup;
     }
 
     private async userHasGroupAssociated(group: GroupDocument, user: UserDocument): Promise<boolean> {
-        const hasGroupAssociated: boolean = user.groups.filter(g => g.name === group.name) !== null;
+        const hasGroupAssociated: boolean = user.groups.filter(g => g.name === group.name).length === 1;
         return hasGroupAssociated;
     }
 }

@@ -77,7 +77,8 @@ class GroupController {
                 return res.status(404).json({message: "Group not found"});
             }
 
-            const user: UserDocument | null = await  userService.findById(req.params.id);
+            const user: UserDocument | null = await  userService.findByEmail(req.body.email);
+            
             if(user === null){
                 return res.status(404).json({message: "User not found"});
             }
@@ -85,8 +86,9 @@ class GroupController {
             const groupModified = await groupService.addUserToGroup(req.params.id, req.body)
             
             return res.status(200).json(groupModified);
-        } catch (error) {
-            res.status(500).json(error);
+        } catch (e) {
+            const error = e as Error;
+            res.status(500).json(error.message);
         }
     }
 
@@ -97,7 +99,7 @@ class GroupController {
                 return res.status(404).json({message: "Group not found"});
             }
 
-            const user: UserDocument | null = await  userService.findById(req.params.id);
+            const user: UserDocument | null = await  userService.findById(req.params.userId);
             if(user === null){
                 return res.status(404).json({message: "User not found"});
             }
