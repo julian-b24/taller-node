@@ -41,8 +41,18 @@ class UserService {
     public async update(user: UserDocument, data: UserInput): Promise<UserDocument | null> {
         try {
             const userUpdate: UserDocument | null = await UserModel.findOneAndUpdate({_id: user.id}, data,{new: true});
-
             return userUpdate;
+
+        }  catch (error) {
+            throw error;
+        }        
+
+    }
+
+    public async delete(userId: string): Promise<UserDocument | null> {
+        try {
+            const deletedUser: UserDocument | null = await UserModel.findByIdAndDelete(userId);
+            return deletedUser;
 
         }  catch (error) {
             throw error;
@@ -52,7 +62,7 @@ class UserService {
 
     public async generateToken(user: UserDocument): Promise<String> {
         try {
-            const token = await jwt.sign({user_id: user.id, email: user.email}, process.env.JWT_SECRET || 'secret', {expiresIn: "5m"});
+            const token = jwt.sign({user_id: user.id, email: user.email}, process.env.JWT_SECRET || 'secret', {expiresIn: "5m"});
 
             return token;
         } catch (error) {

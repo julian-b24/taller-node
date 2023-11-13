@@ -1,5 +1,7 @@
 import {Request, Response} from 'express';
+import userService from '../services/user.service';
 import groupService from '../services/group.service';
+import { UserDocument } from '../models/user.model';
 import {GroupInput, GroupDocument} from '../models/group.model';
 
 class GroupController {
@@ -58,7 +60,7 @@ class GroupController {
         try{
             const groupExists: GroupDocument | null = await groupService.findById(req.params.id);
             if(groupExists ===  null){
-                return res.status(400).json({message: "Group already exists"});
+                return res.status(400).json({message: "Group not found"});
             }
             const group: GroupDocument | null = await groupService.delete(req.params.id);
             
@@ -70,8 +72,19 @@ class GroupController {
 
     public async addUserToGroup(req: Request, res: Response) {
         try{
+            const group: GroupDocument | null = await  groupService.findById(req.params.id);   
+            if(group === null){
+                return res.status(404).json({message: "Group not found"});
+            }
+
+            const user: UserDocument | null = await  userService.findById(req.params.id);
+            if(user === null){
+                return res.status(404).json({message: "User not found"});
+            }
+
+            const groupModified = await groupService.addUserToGroup(req.params.id, req.body)
             
-            return res.status(200).json();
+            return res.status(200).json(groupModified);
         } catch (error) {
             res.status(500).json(error);
         }
@@ -79,8 +92,19 @@ class GroupController {
 
     public async deleteUserFromGroup(req: Request, res: Response) {
         try{
+            const group: GroupDocument | null = await  groupService.findById(req.params.id);   
+            if(group === null){
+                return res.status(404).json({message: "Group not found"});
+            }
+
+            const user: UserDocument | null = await  userService.findById(req.params.id);
+            if(user === null){
+                return res.status(404).json({message: "User not found"});
+            }
+
+            const groupModified = await groupService.deleteUserFromGroup(req.params.id, req.params.userId)
             
-            return res.status(200).json();
+            return res.status(200).json(groupModified);
         } catch (error) {
             res.status(500).json(error);
         }

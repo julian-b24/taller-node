@@ -60,7 +60,9 @@ class GroupService {
         try {
             const group: GroupDocument | null = await GroupModel.findById(groupId);
             const user: UserDocument | null = await UserModel.findOne({"email": newUser.email}); 
-            if(group && user){
+            if(group && user
+                && !this.userIsInGroup(group, user)
+                && !this.userHasGroupAssociated(group, user)) {
                 
                 group.users.push(newUser);
                 await group.save();
@@ -95,7 +97,7 @@ class GroupService {
 
                 return group;
             } else {
-                throw new Error;
+                throw new Error("User is not part of the group");
             }
         }  catch (error) {
             throw error;

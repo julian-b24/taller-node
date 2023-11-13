@@ -23,7 +23,7 @@ const routes = (app: Express) => {
 
   //Add and remove user from groups
   app.post("/auth/groups/:id/users", groupController.addUserToGroup);
-  app.delete("/auth/groups/:id/users/:id", groupController.deleteUserFromGroup);
+  app.delete("/auth/groups/:id/users/:userId", groupController.deleteUserFromGroup);
   
   //Find users in groups, and  fird user's groups
   app.get("/auth/groups/:id/users/", groupController.findUsersInGroup); 
