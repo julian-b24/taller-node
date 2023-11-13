@@ -1,8 +1,9 @@
-import  mongoose from "mongoose";
+import  mongoose, { Schema } from "mongoose";
+import { UserBasic } from "./user.model";
 
 export interface GroupInput {
     name: string;
-    users: string[];
+    users: [UserBasic];
 }
 
 export  interface GroupDocument extends GroupInput, mongoose.Document {
@@ -13,7 +14,7 @@ export  interface GroupDocument extends GroupInput, mongoose.Document {
 
 const groupSchema = new mongoose.Schema({
         name: {type: String, required: true, index: true},
-        users: {type: String, required: true}
+        users: {type: Array, required: true}
     }, {timestamps: true, collection: "groups"});
 
 const Group = mongoose.model<GroupDocument>("Group", groupSchema);
