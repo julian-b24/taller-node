@@ -72,7 +72,7 @@ class GroupService {
                     throw new Error("User already has group associated");
                 }
 
-                group.users.push(newUser);
+                group.users.push({"name": user.name,  "email": user.email});
                 await group.save();
 
                 user.groups.push(group);

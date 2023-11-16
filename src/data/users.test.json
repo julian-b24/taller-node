@@ -9,7 +9,7 @@
   {
     "name": "User1",
     "email": "user1@example.com",
-    "password": "password1",
+    "password": "$2a$10$ElBSchOgfClMQWReByaYhuM1GiXzLsQb2wX8f.kP1/ux8FCQC3QgG",
     "role": "user",
     "groups": [
       {
@@ -34,7 +34,7 @@
   {
     "name": "User2",
     "email": "user2@example.com",
-    "password": "password2",
+    "password": "$2a$10$4QjaEPpYPjGXI8uN2ll6F.evvLMObFDnWKE5v3vRLjEq7WdMALa5e",
     "role": "user",
     "groups": [
       {
@@ -59,7 +59,7 @@
   {
     "name": "User3",
     "email": "user3@example.com",
-    "password": "password3",
+    "password": "$2a$10$HynZJl4mbdcKiYYlj2MjXuxN2M6a88wp4VYwmCu1j1x9xJ1mwCWve",
     "role": "user",
     "groups": [
       {
