@@ -114,8 +114,14 @@ class GroupController {
 
     public async findUsersInGroup(req: Request, res: Response) {
         try{
-            
-            return res.status(200).json();
+            const group: GroupDocument | null = await  groupService.findById(req.params.id);   
+            if(group === null){
+                return res.status(404).json({message: "Group not found"});
+            }
+
+            const users = await groupService.findUsersInGroup(req.params.id)
+
+            return res.status(200).json(users);
         } catch (error) {
             res.status(500).json(error);
         }

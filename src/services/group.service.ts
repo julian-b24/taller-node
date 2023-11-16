@@ -116,6 +116,14 @@ class GroupService {
         }        
     }
 
+    public async findUsersInGroup(groupId: string): Promise<UserBasic[]> {
+        const users: UserBasic[] | null = await GroupModel.findById(groupId, {"users": 1});
+        if (users === null) {
+            return [];
+        }
+        return users;
+    }
+
     private async userIsInGroup(group: GroupDocument, user: UserDocument): Promise<boolean> {        
         const inGroup: boolean = group.users.filter(u => u.email === user.email).length === 1;
         return inGroup;

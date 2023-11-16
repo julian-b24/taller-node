@@ -1,5 +1,6 @@
 import UserModel, {UserInput, UserDocument} from "../models/user.model";
 import jwt  from "jsonwebtoken";
+import GroupModel, {GroupDocument} from "../models/group.model";
 
 class UserService {
     public async create(userInput: UserInput): Promise<UserDocument> {
@@ -68,6 +69,29 @@ class UserService {
         } catch (error) {
             throw error;            
         }
+    }
+
+    public async findUserGroups(userId: string): Promise<GroupDocument[]> {
+        try {
+            const user = await UserModel.findById(userId);
+            if (!user) {
+                return [];
+            }
+
+            const groupPromises: Promise<GroupDocument | null>[] = user.groups.map(async g => {
+                const group: GroupDocument | null = await GroupModel.findOne({ "name": g.name });
+                return group;
+            });
+
+            const resolvedGroups: (GroupDocument | null)[] = await Promise.all(groupPromises);
+            const groups: GroupDocument[] = resolvedGroups.filter(group => group !== null) as GroupDocument[];
+
+            return groups;
+
+        }  catch (error) {
+            throw error;
+        }        
+
     }
 
 }

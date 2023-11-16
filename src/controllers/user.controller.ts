@@ -1,6 +1,7 @@
 import {Request, Response} from 'express';
 import userService from '../services/user.service';
 import {UserInput, UserDocument} from '../models/user.model';
+import {GroupDocument} from "../models/group.model";
 import bcrypt from 'bcrypt';
 
 class UserController {
@@ -98,7 +99,14 @@ class UserController {
 
     public async findUserGroups(req: Request, res: Response) {
         try {
-            return res.status(200).json()
+            const user: UserDocument | null = await  userService.findById(req.params.id);
+            if(user === null){
+                return res.status(404).json({message: "User not found"});
+            }
+
+            const groups: GroupDocument[]  = await userService.findUserGroups(req.params.id);
+            
+            return res.status(200).json(groups)
             
         } catch (error) {
             res.status(500).json(error);
